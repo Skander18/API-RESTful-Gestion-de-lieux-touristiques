@@ -7,6 +7,7 @@ Construire une API RESTful pour une application de gestion de lieux touristiques
 Ajouter une suite de tests avec unittest et django-test.
 
 Un plus serait d'utiliser Celery pour gérer des tâches en arrière-plan, et configurer une tache d'envoi de rapport par email.
+
 Une vue carto des lieux dans l'admin peut également être rajoutée.
 
 ## Exigences
@@ -51,3 +52,13 @@ Connaissance des Outils: Le candidat doit démontrer une bonne compréhension de
 
 Nous vous conseillons d'utiliser la dernière version de Django.
 Nous avons utilisé SQLAlchemy pour le brocker celery.
+
+## Vue carto additionnelle
+
+![image](public/demo-test.png)
+
+À partir d'un [extrait de données d'OpenStreetMap](https://overpass-turbo.eu/s/1U1Q), alimentez l'api et créez les routes nécessaire pour utiliser une interface simple de consultation des données depuis une vue carte leaflet à partir du template HTML [suivant](public/map.html)
+
+L'interface permet de filtrer tous les lieux à une certaine distance du centre de la carte, et les lieux sont affichés dans la sidebar triés en fonction de leur proximité au centre de la carte.
+
+Pour information, dans notre version du test, la bdd utilisée est toujours spatialite, et nous avons en plus utilisé la librairie `djangorestframework-gis`.
