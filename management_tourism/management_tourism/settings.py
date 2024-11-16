@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "django.contrib.gis",
+    'rest_framework_gis',
     "rest_framework",
     "locations"
 ]
@@ -72,6 +73,9 @@ TEMPLATES = [
     },
 ]
 
+SPATIALITE_LIBRARY_PATH = 'mod_spatialite.so'
+
+
 WSGI_APPLICATION = 'management_tourism.wsgi.application'
 
 
@@ -80,7 +84,7 @@ WSGI_APPLICATION = 'management_tourism.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.contrib.gis.db.backends.spatialite',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
