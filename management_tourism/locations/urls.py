@@ -1,7 +1,7 @@
 
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import map_view
+from .views import lieux_list, map_view, map_search
 from .views import LieuViewSet
 
 

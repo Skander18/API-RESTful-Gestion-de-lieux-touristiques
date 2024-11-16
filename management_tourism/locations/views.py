@@ -5,75 +5,72 @@ from django.contrib.gis.db.models.functions import Distance
 from rest_framework import viewsets
 from .models import Lieu
 from .serializers import LieuSerializer
-from rest_framework.views import APIView
-from rest_framework.response import Response
 # Create your views here.
 
 
-class MapSearchView(APIView):
-    def get(self, request):
-        lat = request.GET.get('lat')
-        lng = request.GET.get('lng')
-        distance = request.GET.get('distance')
+def map_search(request):
+    # Extraire les paramètres de la requête
+    lat = request.GET.get('lat')
+    lng = request.GET.get('lng')
+    distance = request.GET.get('distance')
 
-        if not lat or not lng:
-            return Response({'error': 'Les coordonnées sont requises'}, status=400)
+    if not lat or not lng:
+        return JsonResponse({'error': 'Les coordonnées sont requises'}, status=400)
 
-        try:
-            lat = float(lat)
-            lng = float(lng)
-            distance = float(distance) if distance else 1000  # 1000 mètres
-        except ValueError:
-            return Response({'error': 'Coordonnées invalides'}, status=400)
+    # Convertir les paramètres en flottants
+    lat = float(lat)
+    lng = float(lng)
+    distance = float(distance) if distance else 1000  # distance à 1000 mètres
 
-        user_location = Point(lng, lat, srid=4326)
-        lieux = Lieu.objects.annotate(distance=Distance('location', user_location)) \
-                            .filter(distance__lte=distance) \
-                            .order_by('distance')
+    user_location = Point(lng, lat, srid=4326)
+    
+    # Filtrer les lieux par distance et trier par proximité
+    lieux = Lieu.objects.annotate(distance=Distance('location', user_location)) \
+                        .filter(distance__lte=distance) \
+                        .order_by('distance')
 
-        data = {
-            "type": "FeatureCollection",
-            "features": [
-                {
-                    "type": "Feature",
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": [lieu.location.x, lieu.location.y]
-                    },
-                    "properties": {
-                        "nom": lieu.nom,
-                        "description": lieu.description,
-                        "distance": round(lieu.distance.m) if lieu.distance else None
-                    }
+    # Réponse en GeoJSON
+    data = {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [lieu.location.x, lieu.location.y]
+                },
+                "properties": {
+                    "nom": lieu.nom,
+                    "description": lieu.description,
+                    "distance": round(lieu.distance.m) if lieu.distance else None
                 }
-                for lieu in lieux
-            ]
-        }
-        return Response(data)
+            }
+            for lieu in lieux
+        ]
+    }
+    return JsonResponse(data)
 
 
-class LieuxListView(APIView):
-    def get(self, request):
-        lieux = Lieu.objects.all()
-        data = {
-            "type": "FeatureCollection",
-            "features": [
-                {
-                    "type": "Feature",
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": [lieu.location.x, lieu.location.y]
-                    },
-                    "properties": {
-                        "nom": lieu.nom,
-                        "description": lieu.description
-                    }
+def lieux_list(request):
+    lieux = Lieu.objects.all()
+    data = {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [lieu.location.x, lieu.location.y]
+                },
+                "properties": {
+                    "nom": lieu.nom,
+                    "description": lieu.description
                 }
-                for lieu in lieux
-            ]
-        }
-        return Response(data)
-
+            }
+            for lieu in lieux
+        ]
+    }
+    return JsonResponse(data)
 
 def map_view(request):
     return render(request, 'locations/map.html')

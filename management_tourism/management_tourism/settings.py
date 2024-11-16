@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-SPATIALITE_LIBRARY_PATH = 'mod_spatialite.so'
+SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
 
 
 WSGI_APPLICATION = 'management_tourism.wsgi.application'
