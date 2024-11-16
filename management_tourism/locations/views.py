@@ -42,7 +42,7 @@ def map_search(request):
                 "properties": {
                     "nom": lieu.nom,
                     "description": lieu.description,
-                    "distance": round(lieu.distance.m) if lieu.distance else None
+                    "distance": round(lieu.distance.m, 2) if lieu.distance else None
                 }
             }
             for lieu in lieux
