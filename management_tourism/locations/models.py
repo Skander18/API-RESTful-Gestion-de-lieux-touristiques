@@ -1,5 +1,4 @@
 from django.contrib.gis.db import models
-from django.utils import timezone
 
 class Lieu(models.Model):
     nom = models.CharField(max_length=255)

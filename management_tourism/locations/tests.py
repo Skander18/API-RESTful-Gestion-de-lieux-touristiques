@@ -9,7 +9,7 @@ class LieuAPITestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         """
-        Prépare les données partagées pour tous les tests (exécutée une seule fois).
+        Prépare les données partagées pour tous les tests
         """
         cls.client = APIClient()
 
@@ -31,7 +31,7 @@ class LieuAPITestCase(TestCase):
 
     def test_create_lieu(self):
         """
-        Teste la création d'un nouveau lieu via l'API.
+        Teste la création d'un nouveau lieu via l'API
         """
         data = {
             "nom": "Pizza Hut",

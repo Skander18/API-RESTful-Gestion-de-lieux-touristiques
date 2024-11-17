@@ -21,5 +21,5 @@ from locations.views import map_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('locations.urls')),
-    path('', map_view), 
+    path('', map_view, name='home'), 
 ]
