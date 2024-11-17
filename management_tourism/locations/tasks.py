@@ -25,7 +25,7 @@ def send_hourly_report():
         subject,
         message,
         'noreply@example.com',
-        ['admin@example.com'],
+        ['mokni.skander25@gmail.com'],
         fail_silently=False,
     )
     return f"Email envoyé avec {count} lieux ajoutés"
