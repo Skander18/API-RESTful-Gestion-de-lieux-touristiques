@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     "django.contrib.gis",
     'rest_framework_gis',
     "rest_framework",
-    "locations"
+    "locations",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [

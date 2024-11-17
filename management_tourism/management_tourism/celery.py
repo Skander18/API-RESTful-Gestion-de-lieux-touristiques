@@ -4,7 +4,7 @@ from celery.schedules import crontab
 import django
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'management_tourism.settings')
-
+django.setup()
 
 app = Celery('management_tourism')
 app.config_from_object('django.conf:settings', namespace='CELERY')
@@ -14,6 +14,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'send_report_every_hour': {
         'task': 'locations.tasks.send_hourly_report',
-        'schedule': crontab(minute=0, hour='*'),  # Chaque heure à 0 minute
+        'schedule': crontab(minute=0, hour='*'),  # Chaque heure
     },
 }
