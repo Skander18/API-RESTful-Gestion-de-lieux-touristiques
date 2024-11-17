@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "locations",
     "django_celery_beat",
+    "leaflet"
 ]
 
 MIDDLEWARE = [
@@ -136,3 +137,12 @@ CELERY_BROKER_URL = 'sqla+sqlite:///celerydb.sqlite'
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'app/emailfolder')
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (43.610769, 3.876716),
+    'DEFAULT_ZOOM': 12,
+    'MIN_ZOOM': 3,
+    'MAX_ZOOM': 18,
+    'SCALE': 'metric',
+    'ATTRIBUTION_PREFIX': 'Django Leaflet',
+}
