@@ -4,7 +4,7 @@ from locations.models import Lieu
 from django.contrib.gis.geos import Point
 
 class Command(BaseCommand):
-    help = 'Importe des lieux depuis OpenStreetMap (exemple : pizzerias en Montpellier)'
+    help = 'Importe des lieux depuis OpenStreetMap de pizzerias à Montpellier'
 
     def handle(self, *args, **kwargs):
         url = "http://overpass-api.de/api/interpreter"
